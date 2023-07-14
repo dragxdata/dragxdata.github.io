@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Quiz Results</title>
+</head>
+<body>
+    <h1>Quiz Results</h1>
+    <h2>Code:</h2>
+    <pre><code>
+        <span style="color: blue;">def</span> create_matrix_grid():
+            matrix = []
+            <span style="color: blue;">for</span> i <span style="color: blue;">in</span> <span style="color: blue;">range</span>(10):
+                row = []
+                <span style="color: blue;">for</span> j <span style="color: blue;">in</span> <span style="color: blue;">range</span>(10):
+                    row.append(0)
+                matrix.append(row)
+            <span style="color: blue;">return</span> matrix
+
+        <span style="color: blue;">def</span> print_matrix_grid(matrix):
+            print("    ", end="")
+            <span style="color: blue;">for</span> j <span style="color: blue;">in</span> <span style="color: blue;">range</span>(1, 11):
+                print(f"{j:3}", end="")
+            print()
+            <span style="color: blue;">for</span> i, row <span style="color: blue;">in</span> <span style="color: blue;">enumerate</span>(matrix):
+                print(f"Queen {i+1:2} ", end="")
+                <span style="color: blue;">for</span> element <span style="color: blue;">in</span> row:
+                    print(f"{element:3}", end="")
+                print()
+
+        <span style="color: blue;">def</span> get_user_scores(matrix):
+            scores = [0] * 10
+            <span style="color: blue;">for</span> i, row <span style="color: blue;">in</span> <span style="color: blue;">enumerate</span>(matrix):
+                <span style="color: blue;">for</span> j, element <span style="color: blue;">in</span> <span style="color: blue;">enumerate</span>(row):
+                    scores[i] += (j+1) * element
+            <span style="color: blue;">return</span> scores
+
+        <span style="color: blue;">def</span> get_max_score_index(scores):
+            max_score = <span style="color: blue;">max</span>(scores)
+            max_index = scores.index(max_score)
+            <span style="color: blue;">return</span> max_index
+
+        # Create three matrix grid questions
+        question1 = create_matrix_grid()
+        question2 = create_matrix_grid()
+        question3 = create_matrix_grid()
+
+        # Prompt the user to fill in the matrix grids
+        print("Please enter your answers for each matrix grid question:")
+        print("Matrix Grid 1:")
+        <span style="color: blue;">for</span> i <span style="color: blue;">in</span> <span style="color: blue;">range</span>(10):
+            col_index = <span style="color: blue;">int</span>(input(f"Enter the column index (1-10) for Queen {i+1}: "))
+            question1[i][col_index-1] = 1
+
+        print("Matrix Grid 2:")
+        <span style="color: blue;">for</span> i <span style="color: blue;">in</span> <span style="color: blue;">range</span>(10):
+            col_index = <span style="color: blue;">int</span>(input(f"Enter the column index (1-10) for Queen {i+1}: "))
+            question2[i][col_index-1] = 1
+
+        print("Matrix Grid 3:")
+        <span style="color: blue;">for</span> i <span style="color: blue;">in</span> <span style="color: blue;">range</span>(10):
+            col_index = <span style="color: blue;">int</span>(input(f"Enter the column index (1-10) for Queen {i+1}: "))
+            question3[i][col_index-1] = 1
+
+        # Calculate scores for each matrix grid
+        scores1 = get_user_scores(question1)
+        scores2 = get_user_scores(question2)
+        scores3 = get_user_scores(question3)
+
+        # Calculate total scores across all questions
+        total_scores = [scores1[i] + scores2[i] + scores3[i] for i <span style="color: blue;">in</span> <span style="color: blue;">range</span>(10)]
+
+        # Sort queens based on their total points in descending order
+        queens = sorted(enumerate(total_scores, 1), key=lambda x: x[1], reverse=True)
+
+        # Display the results
+        print("\nResults:")
+        <span style="color: blue;">for</span> queen, score <span style="color: blue;">in</span> queens:
+            print(f"Queen {queen}: {score} points")
+
+        max_index = queens[0][0]
+        print("\nYou gave the most number of points to Queen", max_index)
+    </code></pre>
+</body>
+</html>
